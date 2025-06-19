@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Custom game colors */
+  --coral: hsl(0, 79%, 70%);
+  --turquoise: hsl(174, 56%, 57%);
+  --skyblue: hsl(200, 68%, 58%);
+  --mint: hsl(138, 33%, 67%);
+  --softyellow: hsl(48, 100%, 81%);
+  --plum: hsl(300, 58%, 74%);
+  --orange: hsl(21, 100%, 63%);
+  --seafoam: hsl(162, 48%, 74%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+
+  /* Custom game colors for dark mode */
+  --coral: hsl(0, 79%, 60%);
+  --turquoise: hsl(174, 56%, 47%);
+  --skyblue: hsl(200, 68%, 48%);
+  --mint: hsl(138, 33%, 57%);
+  --softyellow: hsl(48, 100%, 71%);
+  --plum: hsl(300, 58%, 64%);
+  --orange: hsl(21, 100%, 53%);
+  --seafoam: hsl(162, 48%, 64%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-nunito antialiased bg-gradient-to-br from-sky-400 via-cyan-400 to-emerald-400 text-foreground min-h-screen;
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .dark body {
+    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
+  }
+}
+
+@layer components {
+  .font-fredoka {
+    font-family: 'Fredoka One', cursive;
+  }
+
+  .font-nunito {
+    font-family: 'Nunito', sans-serif;
+  }
+
+  .game-card {
+    @apply transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl;
+  }
+
+  .coral-gradient {
+    background: linear-gradient(135deg, hsl(0, 79%, 70%), hsl(21, 100%, 63%));
+  }
+
+  .turquoise-gradient {
+    background: linear-gradient(135deg, hsl(174, 56%, 57%), hsl(138, 33%, 67%));
+  }
+
+  .skyblue-gradient {
+    background: linear-gradient(135deg, hsl(200, 68%, 58%), hsl(300, 58%, 74%));
+  }
+
+  .mint-gradient {
+    background: linear-gradient(135deg, hsl(138, 33%, 67%), hsl(162, 48%, 74%));
+  }
+
+  .softyellow-gradient {
+    background: linear-gradient(135deg, hsl(48, 100%, 81%), hsl(21, 100%, 63%));
+  }
+
+  .plum-gradient {
+    background: linear-gradient(135deg, hsl(300, 58%, 74%), hsl(200, 68%, 58%));
+  }
+}
+
+@layer utilities {
+  .animate-bounce-gentle {
+    animation: bounce 2s infinite;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s infinite;
+  }
+
+  .animate-wiggle {
+    animation: wiggle 1s ease-in-out infinite;
+  }
+
+  .coin-animation {
+    animation: coinFlip 0.6s ease-in-out;
+  }
+
+  .star-earned {
+    animation: starPop 0.8s ease-out;
+  }
+
+  .building-tile {
+    @apply transition-all duration-200 hover:scale-105 hover:z-10;
+  }
+
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: hsl(0, 79%, 70%);
+    animation: confetti-fall 3s linear infinite;
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+@keyframes coinFlip {
+  0% { transform: rotateY(0deg); }
+  50% { transform: rotateY(180deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+@keyframes starPop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
