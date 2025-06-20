@@ -19,7 +19,7 @@ export default function MainMenu({ gameState, updateGameState, onNavigate }: Mai
   const xpProgress = ((gameState.user.xp % 1500) / 1500) * 100;
   const nextLevelXP = Math.ceil(gameState.user.xp / 1500) * 1500;
 
-  const showDailyBonus = gameState.gameHistory.lastLogin === new Date().toDateString() && !gameState.gameHistory.dailyBonusClaimed;
+  const showDailyBonus = gameState.gameHistory?.lastLogin === new Date().toDateString() && !gameState.gameHistory?.dailyBonusClaimed;
 
   const claimDailyBonus = () => {
     audioManager.play('coin');

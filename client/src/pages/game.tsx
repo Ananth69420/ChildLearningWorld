@@ -21,7 +21,7 @@ export default function GamePage() {
   useEffect(() => {
     // Check daily bonus
     const today = new Date().toDateString();
-    if (gameState.gameHistory.lastLogin !== today) {
+    if (gameState.gameHistory?.lastLogin !== today) {
       updateGameState({
         user: {
           ...gameState.user,
@@ -31,9 +31,9 @@ export default function GamePage() {
           ...gameState.gameHistory,
           lastLogin: today,
           dailyBonusClaimed: false,
-          streakDays: gameState.gameHistory.lastLogin === new Date(Date.now() - 86400000).toDateString() 
-            ? gameState.gameHistory.streakDays + 1 
-            : 1
+streakDays:gameState.gameHistory?.lastLogin === new Date(Date.now() - 86400000).toDateString()  
+? (gameState.gameHistory?.streakDays || 0) + 1
+  : 1
         }
       });
     }
