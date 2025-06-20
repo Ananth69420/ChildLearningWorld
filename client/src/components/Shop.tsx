@@ -53,47 +53,27 @@ export default function Shop({ gameState, updateGameState, onBack }: ShopProps) 
     audioManager.play('coin');
     setPurchaseAnimation(item.id);
 
-    // Update inventory and coins
+    // Prepare avatar updates
+    let avatarUpdate = { ...gameState.user.avatar };
+    
+    // Auto-equip if it's a replacement for current avatar part
+    if (item.type === 'hair') {
+      avatarUpdate.hair = item.emoji;
+    } else if (item.type === 'pet') {
+      avatarUpdate.pet = item.emoji;
+    } else if (item.type === 'accessories') {
+      avatarUpdate.accessories = item.emoji;
+    }
+
+    // Single update call with all changes
     updateGameState({
       user: {
         ...gameState.user,
         coins: gameState.user.coins - item.cost,
-        inventory: [...gameState.user.inventory, item.id]
+        inventory: [...gameState.user.inventory, item.id],
+        avatar: avatarUpdate
       }
     });
-
-    // Auto-equip if it's a replacement for current avatar part
-    if (item.type === 'hair') {
-      updateGameState({
-        user: {
-          ...gameState.user,
-          avatar: {
-            ...gameState.user.avatar,
-            hair: item.emoji
-          }
-        }
-      });
-    } else if (item.type === 'pet') {
-      updateGameState({
-        user: {
-          ...gameState.user,
-          avatar: {
-            ...gameState.user.avatar,
-            pet: item.emoji
-          }
-        }
-      });
-    } else if (item.type === 'accessories') {
-      updateGameState({
-        user: {
-          ...gameState.user,
-          avatar: {
-            ...gameState.user.avatar,
-            accessories: item.emoji
-          }
-        }
-      });
-    }
 
     setTimeout(() => {
       setPurchaseAnimation(null);
