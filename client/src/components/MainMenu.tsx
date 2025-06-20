@@ -35,6 +35,28 @@ export default function MainMenu({ gameState, updateGameState, onNavigate }: Mai
     });
   };
 
+  const handleAdventureClick = (adventure: string) => {
+    audioManager.play('click');
+    if (adventure === 'jungle') {
+      // Launch Jungle of Numbers (Easy Math Quiz)
+      onNavigate('quiz');
+    } else if (adventure === 'galaxy') {
+      // Check if unlocked (need 3 badges)
+      if (gameState.user.badges.length >= 3) {
+        onNavigate('puzzle');
+      } else {
+        audioManager.play('incorrect');
+      }
+    } else if (adventure === 'castle') {
+      // Check if unlocked (need 6 badges)
+      if (gameState.user.badges.length >= 6) {
+        onNavigate('keypad');
+      } else {
+        audioManager.play('incorrect');
+      }
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       {/* Header with Avatar and Stats */}
@@ -250,7 +272,10 @@ export default function MainMenu({ gameState, updateGameState, onNavigate }: Mai
               
               {/* Jungle of Numbers */}
               <div className="relative">
-                <div className="h-40 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl relative overflow-hidden cursor-pointer hover:scale-105 transition-transform">
+                <div 
+                  className="h-40 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl relative overflow-hidden cursor-pointer hover:scale-105 transition-transform"
+                  onClick={() => handleAdventureClick('jungle')}
+                >
                   <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
                     <div className="text-center text-white">
                       <div className="text-4xl mb-2">🌴</div>
@@ -266,32 +291,48 @@ export default function MainMenu({ gameState, updateGameState, onNavigate }: Mai
 
               {/* Grammar Galaxy */}
               <div className="relative">
-                <div className="h-40 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl relative overflow-hidden cursor-pointer hover:scale-105 transition-transform">
+                <div 
+                  className={`h-40 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl relative overflow-hidden cursor-pointer hover:scale-105 transition-transform ${
+                    gameState.user.badges.length < 3 ? 'opacity-70' : ''
+                  }`}
+                  onClick={() => handleAdventureClick('galaxy')}
+                >
                   <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
                     <div className="text-center text-white">
                       <div className="text-4xl mb-2">🚀</div>
                       <h3 className="font-fredoka text-xl">Grammar Galaxy</h3>
                       <p className="text-sm">Parts of Speech</p>
+                      {gameState.user.badges.length < 3 && (
+                        <p className="text-xs mt-1">Need 3 badges to unlock</p>
+                      )}
                     </div>
                   </div>
-                  <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full w-8 h-8 flex items-center justify-center">
-                    <i className="fas fa-lock text-sm"></i>
+                  <div className={`absolute top-2 right-2 ${gameState.user.badges.length >= 3 ? 'bg-green-500' : 'bg-yellow-500'} text-white rounded-full w-8 h-8 flex items-center justify-center`}>
+                    <i className={`fas ${gameState.user.badges.length >= 3 ? 'fa-check' : 'fa-lock'} text-sm`}></i>
                   </div>
                 </div>
               </div>
 
               {/* Castle of Equations */}
               <div className="relative">
-                <div className="h-40 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl relative overflow-hidden cursor-pointer hover:scale-105 transition-transform">
+                <div 
+                  className={`h-40 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl relative overflow-hidden cursor-pointer hover:scale-105 transition-transform ${
+                    gameState.user.badges.length < 6 ? 'opacity-70' : ''
+                  }`}
+                  onClick={() => handleAdventureClick('castle')}
+                >
                   <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
                     <div className="text-center text-white">
                       <div className="text-4xl mb-2">🏰</div>
                       <h3 className="font-fredoka text-xl">Castle of Equations</h3>
                       <p className="text-sm">Advanced Algebra</p>
+                      {gameState.user.badges.length < 6 && (
+                        <p className="text-xs mt-1">Need 6 badges to unlock</p>
+                      )}
                     </div>
                   </div>
-                  <div className="absolute top-2 right-2 bg-yellow-500 text-white rounded-full w-8 h-8 flex items-center justify-center">
-                    <i className="fas fa-lock text-sm"></i>
+                  <div className={`absolute top-2 right-2 ${gameState.user.badges.length >= 6 ? 'bg-green-500' : 'bg-yellow-500'} text-white rounded-full w-8 h-8 flex items-center justify-center`}>
+                    <i className={`fas ${gameState.user.badges.length >= 6 ? 'fa-check' : 'fa-lock'} text-sm`}></i>
                   </div>
                 </div>
               </div>
