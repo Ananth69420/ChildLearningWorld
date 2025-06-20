@@ -6,6 +6,26 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import GamePage from "@/pages/game";
 import NotFound from "@/pages/not-found";
 
+// ✅ Initialize default game state if missing
+if (!localStorage.getItem("gameState")) {
+  const defaultGameState = {
+    user: {
+      xp: 0,
+      coins: 0,
+    },
+    gameHistory: {
+      lastLogin: "",
+      dailyBonusClaimed: false,
+      streakDays: 0,
+      levelsCompleted: [],
+    },
+    cityGrid: Array(10)
+      .fill(null)
+      .map(() => Array(10).fill(null)), // 10x10 grid
+  };
+  localStorage.setItem("gameState", JSON.stringify(defaultGameState));
+}
+
 function Router() {
   return (
     <Switch>

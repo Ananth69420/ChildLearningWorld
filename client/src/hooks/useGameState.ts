@@ -1,5 +1,6 @@
-import { useLocalStorage } from './useLocalStorage';
-import { GameState, gameStateSchema } from '@shared/schema';
+import { useEffect } from "react";
+import { useLocalStorage } from "./useLocalStorage";
+import { GameState } from "@shared/schema";
 
 const defaultGameState: GameState = {
   user: {
@@ -15,41 +16,81 @@ const defaultGameState: GameState = {
       clothes: "",
       accessories: "",
       skinTone: "",
-      pet: "🐰"
+      pet: "🐰",
     },
     inventory: [],
     progress: [
-      { subject: "Mathematics", level: 1, progress: 0, stars: 0, totalQuestions: 0, correctAnswers: 0 },
-      { subject: "Language Arts", level: 1, progress: 0, stars: 0, totalQuestions: 0, correctAnswers: 0 },
-      { subject: "Problem Solving", level: 1, progress: 0, stars: 0, totalQuestions: 0, correctAnswers: 0 }
-    ]
+      {
+        subject: "Mathematics",
+        level: 1,
+        progress: 0,
+        stars: 0,
+        totalQuestions: 0,
+        correctAnswers: 0,
+      },
+      {
+        subject: "Language Arts",
+        level: 1,
+        progress: 0,
+        stars: 0,
+        totalQuestions: 0,
+        correctAnswers: 0,
+      },
+      {
+        subject: "Problem Solving",
+        level: 1,
+        progress: 0,
+        stars: 0,
+        totalQuestions: 0,
+        correctAnswers: 0,
+      },
+    ],
   },
-  cityGrid: Array(10).fill(null).map(() => Array(10).fill("")),
+  cityGrid: Array(10)
+    .fill(null)
+    .map(() => Array(10).fill("")),
   settings: {
     soundEnabled: true,
     nightMode: false,
-    difficulty: 'easy'
+    difficulty: "easy",
   },
   gameHistory: {
     lastLogin: undefined,
     dailyBonusClaimed: false,
-    streakDays: 0
-  }
+    streakDays: 0,
+  },
 };
 
 export function useGameState() {
-  const [gameState, setGameState] = useLocalStorage<GameState>('learnquest-game-state', defaultGameState);
+  const [gameState, setGameState] = useLocalStorage<GameState>(
+    "learnquest-game-state",
+    defaultGameState,
+  );
+
+  // ✅ Auto-fix missing or broken cityGrid
+  useEffect(() => {
+    const gridBroken =
+      !gameState.cityGrid ||
+      gameState.cityGrid.length !== 10 ||
+      gameState.cityGrid.some((row) => row.length !== 10);
+
+    if (gridBroken) {
+      const fixedGrid = Array(10)
+        .fill(null)
+        .map(() => Array(10).fill(""));
+      updateGameState({ cityGrid: fixedGrid });
+      console.log("✅ Fixed broken or missing cityGrid.");
+    }
+  }, [gameState.cityGrid]);
 
   const updateGameState = (updates: Partial<GameState>) => {
-    setGameState(prevState => ({
+    setGameState((prevState) => ({
       ...prevState,
-      ...updates
+      ...updates,
     }));
   };
 
-  const calculateLevel = (xp: number) => {
-    return Math.floor(xp / 1500) + 1;
-  };
+  const calculateLevel = (xp: number) => Math.floor(xp / 1500) + 1;
 
   const getXPForNextLevel = (currentXP: number) => {
     const currentLevel = calculateLevel(currentXP);
@@ -65,8 +106,8 @@ export function useGameState() {
       user: {
         ...gameState.user,
         xp: newXP,
-        level: newLevel
-      }
+        level: newLevel,
+      },
     });
 
     return { leveledUp, newLevel };
@@ -76,8 +117,8 @@ export function useGameState() {
     updateGameState({
       user: {
         ...gameState.user,
-        coins: gameState.user.coins + amount
-      }
+        coins: gameState.user.coins + amount,
+      },
     });
   };
 
@@ -86,8 +127,8 @@ export function useGameState() {
       updateGameState({
         user: {
           ...gameState.user,
-          coins: gameState.user.coins - amount
-        }
+          coins: gameState.user.coins - amount,
+        },
       });
       return true;
     }
@@ -101,6 +142,6 @@ export function useGameState() {
     awardCoins,
     spendCoins,
     calculateLevel,
-    getXPForNextLevel
+    getXPForNextLevel,
   };
 }

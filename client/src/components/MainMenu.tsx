@@ -16,10 +16,8 @@ export default function MainMenu({ gameState, updateGameState, onNavigate }: Mai
     onNavigate(game);
   };
 
-const xpProgress = ((gameState.user?.xp ?? 0) % 1500) / 1500 * 100;
-
-  
-  const nextLevelXP = Math.ceil(gameState.user.xp / 1500) * 1500;
+  const xpProgress = ((gameState.user?.xp ?? 0) % 1500) / 1500 * 100;
+  const nextLevelXP = Math.ceil((gameState.user?.xp ?? 0) / 1500) * 1500;
 
   const showDailyBonus = gameState.gameHistory?.lastLogin === new Date().toDateString() && !gameState.gameHistory?.dailyBonusClaimed;
 
@@ -221,6 +219,23 @@ const xpProgress = ((gameState.user?.xp ?? 0) % 1500) / 1500 * 100;
             </div>
             <Button className="skyblue-gradient text-white font-bold text-lg hover:shadow-lg transition-all">
               View Progress!
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Avatar Customization Card */}
+        <Card className="game-card cursor-pointer" onClick={() => handleGameClick('avatar')}>
+          <CardContent className="p-6 text-center">
+            <div className="w-20 h-20 pink-gradient rounded-full flex items-center justify-center mx-auto mb-4 text-4xl animate-pulse-slow">
+              👤
+            </div>
+            <h3 className="text-2xl font-fredoka text-gray-800 dark:text-white mb-2">Avatar</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">Customize your character's look!</p>
+            <div className="flex justify-center space-x-2 mb-4">
+              <span className="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm font-semibold">Style It!</span>
+            </div>
+            <Button className="pink-gradient text-white font-bold text-lg hover:shadow-lg transition-all">
+              Customize!
             </Button>
           </CardContent>
         </Card>

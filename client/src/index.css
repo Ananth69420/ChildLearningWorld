@@ -121,6 +121,10 @@
   .plum-gradient {
     background: linear-gradient(135deg, hsl(300, 58%, 74%), hsl(200, 68%, 58%));
   }
+
+  .pink-gradient {
+    background: linear-gradient(135deg, hsl(330, 75%, 75%), hsl(310, 60%, 65%));
+  }
 }
 
 @layer utilities {
