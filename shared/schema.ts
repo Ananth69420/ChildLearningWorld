@@ -1,5 +1,24 @@
 import { z } from "zod";
 
+// User schema for authentication/storage
+export const userSchema = z.object({
+  id: z.number(),
+  username: z.string(),
+  email: z.string().email().optional(),
+  createdAt: z.string().optional()
+});
+
+export const insertUserSchema = userSchema.omit({ id: true });
+
+export type User = z.infer<typeof userSchema>;
+export type InsertUser = z.infer<typeof insertUserSchema>;
+
+// Mock users table for storage interface
+export const users = {
+  $inferSelect: {} as User,
+  $inferInsert: {} as InsertUser
+};
+
 export const avatarPartSchema = z.object({
   type: z.enum(['hair', 'clothes', 'accessories', 'skinTone', 'pet']),
   id: z.string(),

@@ -49,7 +49,7 @@ export default function AvatarCustomization({ gameState, updateGameState, onBack
   const [previewAvatar, setPreviewAvatar] = useState(gameState.user.avatar);
   const [activeTab, setActiveTab] = useState('hair');
 
-  const handleOptionSelect = (category: keyof typeof avatarOptions, option: any) => {
+  const handleOptionSelect = (category: string, option: any) => {
     // Check if user owns this item (free items or purchased items)
     if (option.cost > 0 && !gameState.user.inventory.includes(option.id)) {
       audioManager.play('incorrect');
@@ -57,9 +57,10 @@ export default function AvatarCustomization({ gameState, updateGameState, onBack
     }
 
     audioManager.play('click');
+    const avatarKey = category === 'pets' ? 'pet' : category;
     setPreviewAvatar(prev => ({
       ...prev,
-      [category]: option.emoji
+      [avatarKey]: option.emoji
     }));
   };
 
@@ -96,8 +97,9 @@ export default function AvatarCustomization({ gameState, updateGameState, onBack
     return item.cost === 0 || gameState.user.inventory.includes(item.id);
   };
 
-  const isItemSelected = (category: keyof typeof avatarOptions, item: any) => {
-    return previewAvatar[category] === item.emoji;
+  const isItemSelected = (category: string, item: any) => {
+    const avatarKey = category === 'pets' ? 'pet' : category;
+    return previewAvatar[avatarKey as keyof typeof previewAvatar] === item.emoji;
   };
 
   const hasChanges = () => {
@@ -275,7 +277,7 @@ export default function AvatarCustomization({ gameState, updateGameState, onBack
                           className={`cursor-pointer transition-all ${
                             selected ? 'ring-4 ring-blue-500 bg-blue-50 dark:bg-blue-900' : ''
                           } ${!owned ? 'opacity-60' : 'hover:shadow-md'}`}
-                          onClick={() => handleOptionSelect('pet', option)}
+                          onClick={() => handleOptionSelect('pets', option)}
                         >
                           <CardContent className="p-4 text-center">
                             <div className="text-4xl mb-2">{option.emoji}</div>

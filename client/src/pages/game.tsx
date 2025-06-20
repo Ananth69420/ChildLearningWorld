@@ -48,8 +48,8 @@ export default function GamePage() {
     }
   }, [nightMode]);
 
-  const navigateToGame = (game: GameMode) => {
-    setCurrentGame(game);
+  const navigateToGame = (game: string) => {
+    setCurrentGame(game as GameMode);
   };
 
   const navigateToMenu = () => {
