@@ -22,6 +22,9 @@ export default function GamePage() {
     // Check daily bonus
     const today = new Date().toDateString();
     if (gameState.gameHistory?.lastLogin !== today) {
+      const yesterday = new Date(Date.now() - 86400000).toDateString();
+      const isConsecutiveDay = gameState.gameHistory?.lastLogin === yesterday;
+      
       updateGameState({
         user: {
           ...gameState.user,
@@ -31,13 +34,11 @@ export default function GamePage() {
           ...gameState.gameHistory,
           lastLogin: today,
           dailyBonusClaimed: false,
-streakDays:gameState.gameHistory?.lastLogin === new Date(Date.now() - 86400000).toDateString()  
-? (gameState.gameHistory?.streakDays || 0) + 1
-  : 1
+          streakDays: isConsecutiveDay ? (gameState.gameHistory?.streakDays || 0) + 1 : 1
         }
       });
     }
-  }, []);
+  }, [gameState.gameHistory?.lastLogin, updateGameState]);
 
   useEffect(() => {
     if (nightMode) {
