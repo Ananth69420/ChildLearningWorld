@@ -173,8 +173,8 @@ export default function MyWorld({ gameState, updateGameState, onBack }: MyWorldP
             {/* City Grid */}
             <div className="flex-1 bg-gradient-to-br from-green-100 to-blue-100 dark:from-green-900 dark:to-blue-900 rounded-2xl p-4">
               <div className="grid grid-cols-10 gap-1 h-full">
-                {gameState.cityGrid.map((row, rowIndex) => 
-                  row.map((cell, colIndex) => (
+                {gameState.cityGrid?.map((row, rowIndex) => 
+                  row?.map((cell, colIndex) => (
                     <div
                       key={`${rowIndex}-${colIndex}`}
                       className="building-tile bg-white/50 dark:bg-gray-800/50 rounded border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-blue-400 cursor-pointer flex items-center justify-center text-2xl transition-all aspect-square"
