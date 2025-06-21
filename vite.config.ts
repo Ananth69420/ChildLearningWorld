@@ -37,5 +37,9 @@ export default async function() {
         deny: ["**/.*"]
       }
     }
+    // vite.config.ts
+const vite_config_default = async () => { ... };
+export default vite_config_default;
+
   });
 }
